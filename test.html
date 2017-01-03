@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Foursquare Checkin</title>
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.2.9/sweetalert2.min.css">
+	<link rel="stylesheet" href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css"></link>
+	<style>
+	body{
+	background:black;
+	}
+	.round{
+		border-radius:50%;
+		
+	}
+	.name{
+		font-size:30px;
+	}
+	</style>
+</head>
+<body>
+	<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/sweetalert2/6.2.9/sweetalert2.min.js"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+
+			setInterval(function () {
+
+				$.ajax({
+				  url: 'kontrol.php',
+				  method:"post",
+				  success: function(data){
+				  	
+				  	if(data!="bos"){
+
+				  		user = JSON.parse(data);
+					  	for (var i = 0; i < user.length; i++) {
+					  		/*$("#user").html(user[i].user_firstName + " " + user[i].user_lastname);
+							$("#photo").attr("src",user[i].user_photo);*/
+							swal({
+								  title: 'HOŞ GELDİNİZ',
+								  html: $('<div>')
+									.addClass('name')
+									.text(user[i].user_firstName + " " + user[i].user_lastname),
+								  animation: true,
+								  imageUrl: user[i].user_photo,
+								  imageClass:"round",
+								  customClass: 'animated tada',
+								  showConfirmButton:false,
+								  showCancelButton:false,
+								  timer:4000
+								})
+							}
+					  	
+				  	}
+				  	
+				  },
+				  error: function(data){
+				    console.log("Hata");
+				  },
+				})
+			},10000);
+
+		});
+
+	</script>
+</body>
+</html>
